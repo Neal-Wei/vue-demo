@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>局部组件的使用</title>
+</head>
+<style>
+	button{
+		display: inline-block;
+	    line-height: 1;
+	    white-space: nowrap;
+	    cursor: pointer;
+	    background: #fff;
+	    border: 1px solid #dcdfe6;
+	    color: #606266;
+	    -webkit-appearance: none;
+	    text-align: center;
+	    box-sizing: border-box;
+	    outline: none;
+	    margin: 0;
+	    transition: .1s;
+	    font-weight: 500;
+	    -moz-user-select: none;
+	    -webkit-user-select: none;
+	    -ms-user-select: none;
+	    padding: 12px 20px;
+	    font-size: 14px;
+	    border-radius: 4px;
+	}
+	.warn{
+		color: #fff;
+	    background-color: #e6a23c;
+	    border-color: #e6a23c;
+	}
+	.danger{
+		color: #fff;
+	    background-color: #f56c6c;
+	    border-color: #f56c6c;
+	}
+</style>
+<body>
+	<div id="app"></div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	Vue.component('vLi',{
+		template:'<li><slot name="two"></slot><slot name="three"></slot></li>'
+	})
+
+	var App = { //App组件作为一个总的装载器，将所有的子组件统一整合
+		template:'<div> <ul><vLi><h1 slot="two">这时第一个插槽</h1><h2 slot="three">这时第二个插槽</h2></vLi></ul> </div>'
+	}
+	new Vue({
+		el:"#app",
+		data:{},
+		components:{
+			App
+		},
+		template:"<App/>"
+	})
+</script>
+</html>

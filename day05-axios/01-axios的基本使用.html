@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态路由匹配</title>
+</head>
+<style>
+	
+</style>
+<body>
+	<div id="app"></div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script src="../node_modules/axios/dist/axios.js"></script>
+<script type="text/javascript">
+	console.log(axios)
+	var Timeline = {
+		template:`
+			<div>
+				我是首页
+				<router-link :to="{name:'comDesc',params:{id:'frontend'}}">前端</router-link>
+				<router-link :to="{name:'comDesc',params:{id:'backend'}}">后端</router-link>
+				<router-view></router-view>
+			</div>
+		`
+	}
+	var Pais = {
+		template:`
+			<div>我是沸点</div>
+		`
+	}
+	var ComDesc = {
+		data(){
+			return{
+				msg:""
+			}
+		},
+		template:`
+			<div>
+				我是{{msg}}
+			</div>
+		`,
+		created:function(){
+
+		}
+	}
+	var router = new VueRouter({
+		routes:[
+			{
+				path:"/timeline",
+				component:Timeline,
+				children:[
+					{
+						name:"comDesc",
+						path:"/timeline/:id",
+						component:ComDesc
+					}
+				]
+			},
+			{path:"/pais",component:Pais},
+
+		]
+	}) 
+	var App = { 
+		template:`
+			<<div>
+				<router-link to='timeline'>首页</router-link>	
+				<router-link to='pais'>沸点</router-link>
+				<router-view></router-view>
+			</div>>
+		`
+	}
+	new Vue({
+		el:"#app",
+		data:{},
+		components:{
+			App
+		},
+		template:"<App/>"
+	})
+</script>
+</html>

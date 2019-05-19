@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue-router</title>
+</head>
+<body>
+	 <div id="app"></div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script src="../node_modules/vue-router/dist/vue-router.js"></script>
+
+<script>
+	
+	var Login = {
+		template:'<div>这是一个登陆页面</div>'
+	}
+	var Register = {
+		template:'<div>这是一个注册页面</div>'
+	}
+	//创建router对象
+	var router = new VueRouter({
+		//配置路由对象
+		routes:[
+			//路由匹配规则
+			{
+				path:"/login",
+				component:Login
+			},
+			{
+				path:"/register",
+				component:Register
+			}
+		]
+	})
+	// 引入vue-router模块  抛出两个全局的组件router-link
+	var App = { 
+		template:'<div><router-link to="/login">登陆页面&nbsp;</router-link><router-link to="/register">注册页面</router-link> <router-view></router-view></div>',
+		
+	}
+
+	new Vue({
+		el:"#app",
+		data(){
+			return{
+
+			}
+		},
+		components:{
+			App
+		},
+		router,
+		template:"<App/>"
+	})
+</script>
+</html>

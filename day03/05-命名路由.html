@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue-router</title>
+</head>
+<body>
+	 <div id="app"></div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script src="../node_modules/vue-router/dist/vue-router.js"></script>
+
+<script>
+	//vue-router 默认 hash 模式 —— 使用 URL 的 hash 来模拟一个完整的 URL，于是当 URL 改变时，页面不会重新加载
+	const Home = { template: '<div>This is Home</div>' }
+	const Foo = { template: '<div>This is Foo</div>' }
+	const Bar = { template: '<div>This is Bar {{ $route.params.id }}</div>' }
+	//创建router对象
+	const router = new VueRouter({
+	  // mode: 'history',
+	  // base: __dirname,
+	  routes: [ //配置路由对象
+	    { path: '/', name: 'home', component: Home }, //路由匹配规则
+	    { path: '/foo', name: 'foo', component: Foo },
+	    { path: '/bar/:id', name: 'bar', component: Bar }
+	  ]
+	})
+
+	// 引入vue-router模块  抛出两个全局的组件router-link
+	var App = {
+		template: `
+		    <div id="app">
+		      <h1>Named Routes</h1>
+		      <p>Current route name: {{ $route.name }}</p>
+		      <ul>
+		        <li><router-link :to="{ name: 'home' }">home</router-link></li>
+		        <li><router-link :to="{ name: 'foo' }">foo</router-link></li>
+		        <li><router-link :to="{ name: 'bar', params: { id: 123 }}">bar</router-link></li>
+		      </ul>
+		      <router-view class="view"></router-view>
+		    </div>
+		  `
+	}
+
+	new Vue({
+		el:"#app",
+		data(){
+		return{
+
+			}
+		},
+		components:{
+			App
+		},
+		router,
+		template:"<App/>"
+	})
+</script>
+</html>

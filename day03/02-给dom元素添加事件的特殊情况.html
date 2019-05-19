@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>dom元素添加事件</title>
+</head>
+<style>
+	button{
+		padding: 10px;
+		background-color: #fff;
+		box-shadow: none;
+		border: 1px solid #dcdfe6;
+		outline: none;
+		border-radius: 4px;
+	}
+</style>
+<body>
+	<div id="app"></div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	var App = { //App组件作为一个总的装载器，将所有的子组件统一整合
+		data(){
+			return{
+				isShow:false
+			}
+		},
+		template:'<div class="app"> <input v-show="isShow" ref="input" /> </div>',
+		mounted:function() {
+			this.isShow = true;
+			// $nextTick() 是在dom更新循环结束后执行回调函数，在修改数据之后使用此方法，在回调中获取到更新之后的dom
+			this.$nextTick(()=>{
+				this.$refs.input.focus()
+			})
+		}
+	}
+	new Vue({
+		// el:"#app",
+		data:{},
+		components:{
+			App
+		},
+		template:"<App/>"
+	}).$mount(document.querySelector('#app'))
+</script>
+</html>

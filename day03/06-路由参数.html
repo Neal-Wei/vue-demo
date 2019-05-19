@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue-router</title>
+</head>
+<body>
+	 <div id="app"></div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script src="../node_modules/vue-router/dist/vue-router.js"></script>
+
+<script>
+	const Foo = { 
+		props: {
+		    name: {
+		      type: String,
+		      default: 'Vue!'
+		    }
+		},
+		template: `
+			<div>
+			    <h2 class="hello">Hello {{name}} {{ $attrs }}</h2>
+			</div>
+		` 
+	}
+
+	/*
+	* 地址栏上 路由范式
+	* 1）xxx.html#/user/1   param(动态路由参数)
+	* 2）xxx.html#/user?userId=1  query
+	*/
+
+	function dynamicPropsFn (route) {
+	  const now = new Date()
+	  return {
+	    name: (now.getFullYear() + parseInt(route.params.years)) + '!'
+	  }
+	}
+
+	const router = new VueRouter({
+	  // mode: 'history',
+	  // base: __dirname,
+	  routes: [
+	    { path: '/', component: Foo }, // No props, no nothing
+	    { path: '/Foo/:name', component: Foo, props: true }, // Pass route.params to props
+	    { path: '/static', component: Foo, props: { name: 'world' }}, // static values
+	    { path: '/dynamic/:years', component: Foo, props: dynamicPropsFn }, // custom logic for mapping between route and props
+	    { path: '/attrs', component: Foo, props: { name: 'attrs' }}
+	  ]
+	})
+
+
+	// 引入vue-router模块  抛出两个全局的组件router-link
+	var App = {
+		template: `
+		    <div id="app">
+		      <h1>Route props</h1>
+		      <ul>
+		        <li><router-link to="/">/</router-link></li>
+		        <li><router-link to="/Foo/you">/Foo/you</router-link></li>
+		        <li><router-link to="/static">/static</router-link></li>
+		        <li><router-link to="/dynamic/1">/dynamic/1</router-link></li>
+		        <li><router-link to="/attrs">/attrs</router-link></li>
+		      </ul>
+		      <router-view class="view" foo="123"></router-view>
+		    </div>
+		  `
+	}
+
+	new Vue({
+		el:"#app",
+		data(){
+		return{
+
+			}
+		},
+		components:{
+			App
+		},
+		router,
+		template:"<App/>"
+	})
+</script>
+</html>

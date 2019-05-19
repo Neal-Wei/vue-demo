@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算属性computed</title>
+</head>
+<style>
+	img{height: 300px;}
+	li h2{cursor: pointer;}
+	.active{background-color: #f56c6c; }
+</style>
+<body>
+	<div id="app">
+		<img :src="getImgSrc" alt="">
+		<ul>
+			<li v-for="(item,index) in initData" @click="handleClick(index)" :class={active:cIndex==index}>
+				<h2>{{item.id}} - {{item.name}}</h2>
+			</li>
+		</ul>
+	</div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+		
+	//1. 简单的一些小计算可以直接用模板内的表达式计算，比较复杂一点的就建议使用“计算属性来运算了”，也方便后期的维护,每个计算属性都有一个getter函数 和 setter函数
+	//2. 对于computed计算属性来说还有一个很重要的作用就是：缓存
+
+	var initData = [
+		{id:1,name:"图片1",imgsrc:"../statics/pic1.jpg"},
+		{id:2,name:"图片2",imgsrc:"../statics/pic2.jpg"},
+		{id:3,name:"图片3",imgsrc:"../statics/pic3.jpg"},
+		{id:4,name:"图片4",imgsrc:"../statics/pic4.jpg"}
+	]
+	
+	new Vue({
+		el:"#app",
+		data:{
+			initData:initData,
+			cIndex:0
+		},
+		computed:{
+			//计算属性默认只有getter
+			//setter
+			// getImgSrc:function() { //getter
+			// 	return this.initData[this.cIndex].imgsrc
+			// }
+			getImgSrc:{
+				set:function(newV){ //set负责改变
+					console.log(newV)
+					this.cIndex = newV
+				},
+				get:function(){ //get负责获取
+					return this.initData[this.cIndex].imgsrc
+				}
+			}
+
+		},
+		methods:{
+			handleClick(index) {
+				// this.cIndex = index;
+				//set和get方法
+				console.log(this.getImgSrc);
+				this.getImgSrc = index
+			}
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue-router实现原理</title>
+</head>
+<body>
+	<!-- 
+		路由实现的原理：
+			1> 传统开发方式url改变后，立刻发生请求响应整个页面，有可能资源过多，传统开发会让页面出现白屏
+			2> SPA单页面应用Single Page Application
+
+			锚点值改变后
+			不会立刻发送请求，二十在某个合适的时机，发起Ajax请求 页面局部渲染
+
+			有点： 页面不立刻跳转 用户体验好
+
+			vue angular react
+	 -->
+	 <a href="#/login">登陆页面</a>
+	 <a href="#/register">注册页面</a>
+	 <div id="page"></div>
+</body>
+<script>
+	var div = document.querySelector('#page')
+	window.onhashchange = function(){
+		console.log(location.hash);
+		switch(location.hash) {
+			case '#/login':
+				div.innerHTML = '<h2>这是登陆页面</h2>'
+				break;
+			case '#/register':
+				div.innerHTML = '<h2>这是注册页面</h2>'
+				break;
+		}
+	}
+</script>
+</html>

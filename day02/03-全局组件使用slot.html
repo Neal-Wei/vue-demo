@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>局部组件的使用</title>
+</head>
+<style>
+	button{
+		display: inline-block;
+	    line-height: 1;
+	    white-space: nowrap;
+	    cursor: pointer;
+	    background: #fff;
+	    border: 1px solid #dcdfe6;
+	    color: #606266;
+	    -webkit-appearance: none;
+	    text-align: center;
+	    box-sizing: border-box;
+	    outline: none;
+	    margin: 0;
+	    transition: .1s;
+	    font-weight: 500;
+	    -moz-user-select: none;
+	    -webkit-user-select: none;
+	    -ms-user-select: none;
+	    padding: 12px 20px;
+	    font-size: 14px;
+	    border-radius: 4px;
+	}
+	.warn{
+		color: #fff;
+	    background-color: #e6a23c;
+	    border-color: #e6a23c;
+	}
+	.danger{
+		color: #fff;
+	    background-color: #f56c6c;
+	    border-color: #f56c6c;
+	}
+</style>
+<body>
+	<div id="app"></div>
+</body>
+<script src="../node_modules/vue/dist/vue.min.js"></script>
+<script type="text/javascript">
+	//全局组件
+	//第一个参数是组件的名字，第二个是一个对象
+	Vue.component('btn',{
+		props:['type'],
+		template:'<button class="default" :class="type"><slot>按钮</slot></button>'
+	})
+
+	var topHeader = {
+		template:'<div>这是头部组件</div>'
+	}
+
+	var Vcontent = {
+		template:'<div>这是内容组件 <btn type="warn">注册</btn> <btn type="danger">登陆</btn> </div>'
+	}
+
+	var App = { //App组件作为一个总的装载器，将所有的子组件同一整合
+		template:'<div> <topHeader /> <div><Vcontent /></div></div>',
+		components:{
+			topHeader,
+			Vcontent
+		}
+	}
+	new Vue({
+		el:"#app",
+		data:{},
+		components:{
+			App
+		},
+		template:"<App/>"
+	})
+</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>watch(监听器)</title>
+</head>
+<style>
+	
+</style>
+<body>
+	<div id="app">
+		<input type="text" v-model="msg" />
+		<h3>{{msg}}</h3>
+		<button @click="stus[0].name='王五'">anniu</button>
+		<h4>{{stus[0].name}}</h4>
+	</div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	
+	new Vue({
+		el:"#app",
+		data:{
+			msg:'',
+			stus:[
+				{name:"lisi"}
+			]
+		},
+		watch:{
+			msg:function(vNew,vOld){
+				if (vNew.length>5) {
+					alert('不能再输入了')
+					return
+				}
+			},
+			stus:{
+				deep:true,
+				handler:function (vNew,vOld) {
+					console.log(vNew);
+				}
+			}
+		}
+	})
+</script>
+</html>

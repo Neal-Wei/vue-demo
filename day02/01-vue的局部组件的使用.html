@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>局部组件的使用</title>
+</head>
+<body>
+	<div id="app"></div>
+</body>
+<script src="../node_modules/vue/dist/vue.min.js"></script>
+<script type="text/javascript">
+	//全局组件
+	//第一个参数是组件的名字，第二个是一个对象
+	Vue.component('btn',{
+		template:'<button>按钮</button>'
+	})
+
+	var topHeader = {
+		template:'<div>这是头部组件</div>'
+	}
+
+	var Vcontent = {
+		template:'<div>这是内容组件 <btn /> </div>'
+	}
+
+	var App = { //App组件作为一个总的装载器，将所有的子组件同一整合
+		template:'<div> <topHeader /> <div><Vcontent /></div></div>',
+		components:{
+			topHeader,
+			Vcontent
+		}
+	}
+	new Vue({
+		el:"#app",
+		data:{},
+		components:{
+			App
+		},
+		template:"<App/>"
+	})
+</script>
+</html>

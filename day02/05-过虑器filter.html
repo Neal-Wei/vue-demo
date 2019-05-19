@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>局部组件的使用</title>
+</head>
+<style>
+	
+</style>
+<body>
+	<div id="app"></div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	//过滤器的作用：处理页面的数据 比如时间戳转乘具体的时间
+	//过滤器有两种： 局部过滤器 全局顾虑器
+	/**
+	*1.声明过滤器
+	*2.{{数据 | 过滤器名字}}
+	*/
+	Vue.filter('myReverse',function(val,arg){
+		return arg + val.split('').reverse().join('');
+	})
+	var App = { //App组件作为一个总的装载器，将所有的子组件统一整合
+		data(){
+			return{
+				price:1,
+				msg:'hello world'
+			}
+		},
+		template:'<div> <input type="text" v-model="price" /> <h2>{{price | handleValue}}</h2> <h3>{{msg | myReverse("1111")}}</h3></div>',
+		filters:{
+			handleValue(val){
+				return '$' + val
+			}
+		}
+	}
+	new Vue({
+		el:"#app",
+		data:{},
+		components:{
+			App
+		},
+		template:"<App/>"
+	})
+</script>
+</html>

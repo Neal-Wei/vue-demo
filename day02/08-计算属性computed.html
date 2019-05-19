@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算属性computed</title>
+</head>
+<style>
+	img{height: 300px;}
+	li h2{cursor: pointer;}
+	.active{background-color: #f56c6c; }
+</style>
+<body>
+	<div id="app">
+		<App />
+	</div>
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	/*
+		beforeCreate
+		created
+		beforeMount
+		mounted
+		beforeUpdate
+		updated
+		activated
+		deactivated
+		beforeDestroy
+		destroyed
+	*/
+
+	Vue.component('Test',{
+		data(){
+			return{
+				msg:"hello world"
+			}
+		},
+		template:"<div> <div>{{msg}}</div> <button @click='changeHandle'>CHANGE</button></div>",
+		methods:{
+			changeHandle(){
+				this.msg = this.msg + '222'
+			}
+		},
+		beforeCreate:function(){ //组件创建之前
+			// console.log(this,msg); //undefined
+		},
+		created:function(){//组件创建之后
+			//页面加载，就会调用created函数
+			//可以操作后端传过来的数据，数据驱动试图
+			//可以发起ajax请求
+			// console.log(this,msg);
+		},
+		beforeMount:function(){ //挂载数据到dom 之前 调用
+			console.log(document.getElementById('app'));
+		},
+		mounted:function(){  //挂载数据到dom 之后 调用
+			console.log(document.getElementById('app'));
+		},
+		beforeUpdate:function(){  //在更新dom之前 调用该钩子 应用：可以获取原始的dom
+			console.log(document.getElementById('app').innerHTML);
+		},
+		Update:function(){  //在更新dom之后 调用该钩子 应用：可以获取原新的dom
+			console.log(document.getElementById('app').innerHTML);
+		},
+		beforeDestroy:function(){
+			console.log('beforeDestroy');
+		},
+		Destroyed:function(){
+			console.log('Destroyed');
+		},
+		activated:function(){
+			console.log('组件被激活了');
+		},
+		deactivated:function(){
+			console.log('组件被停用了');
+		}
+
+	})
+	var App = { //App组件作为一个总的装载器，将所有的子组件同一整合
+		data(){
+			return{
+				isShow:true
+			}
+		},
+		//vue内置组件<keep-alive></keep-alive>能在组件的切换过程中将状态保留在内存中，防止重复渲染dom
+		template:'<div class="app"> <keep-alive> <Test  v-if="isShow"/> </keep-alive> <button @click="clickHandle">btn</button></div>',
+		methods:{
+			clickHandle(){
+				this.isShow = !this.isShow
+			}
+		}
+	}	
+	new Vue({
+		el:"#app",
+		data:{},
+		components:{
+			App
+		},
+		// template:"<App/>"
+	})
+</script>
+</html>
